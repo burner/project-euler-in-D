@@ -1,25 +1,27 @@
 import std.stdio;
-import std.math;
+import std.container;
 
 void main() {
-	//immutable uint max = 9;
-	immutable uint max = 1_999_999;
-	uint p = 0;
-	uint siev[sqrt(max)];
-	siev[p++] = 2;
-	siev[p++] = 3;
+	Array!(ulong) prim;
+	prim.insertBack(2);
+	prim.insertBack(3);
+	ulong tt = prim.back();
 	ulong sum = 5;
-	uint tt = 3;
-	outer: while(tt < max) {
-		tt += 2;
-		foreach(it; siev[0..p]) {
+	bool primB = false;
+	//while(tt < 2_000_000) {
+	while(tt < 1_999_999) {
+		tt+=2;
+		if(tt % 10000 < 2) writeln(tt, " array.size = ", prim.length());
+		primB = true;
+		foreach(it; prim) {
 			if(tt % it == 0) {
-				continue outer;
+				primB = false;
+				break;
 			}
 		}
-		sum += tt;
-		if(p < siev.length-1) {
-			siev[p++] = tt;
+		if(primB) {
+			prim.insertBack(tt);
+			sum+=tt;
 		}
 	}
 	writeln(sum);
