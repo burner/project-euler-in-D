@@ -71,7 +71,7 @@ bool cmp(in string a, in string b) {
 pure uint count(in string str) {
 	uint rs = 0;
 	foreach(it;str) {
-		rs += (it-65);	
+		rs += (it-64);	
 	}
 	return rs;
 }
@@ -82,6 +82,7 @@ void main(string[] args) {
 	uint i = 1;
 	foreach(it; args[1..$]) {
 		rs += (i++) * count(it);
+		//writeln(it);
 	}
 	writeln(rs);
 }
