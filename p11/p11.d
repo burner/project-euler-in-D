@@ -84,8 +84,9 @@ ulong diaR() {
 }
 
 void main() {
-	writeln(vert());
-	writeln(hori());
-	writeln(diaL());
-	writeln(diaR());
+	ulong max = vert();
+	max = max < hori ? hori : max;
+	max = max < diaL ? diaL : max;
+	max = max < diaR ? diaR : max;
+	writeln(max);
 }

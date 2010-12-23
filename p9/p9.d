@@ -6,7 +6,7 @@ void main() {
 			for(uint c = b; c < 1000; c++) {
 				if(a+b+c != 1000) continue;
 				if((a^^2) + (b^^2) != (c^^2)) continue;
-				writefln("%u %u %u = %u", a,b,c, a*b*c);
+				writeln(a*b*c);
 				break outer;
 			}
 		}

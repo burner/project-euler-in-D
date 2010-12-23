@@ -18,5 +18,5 @@ void main() {
 		}
 		it+=2520;
 	}
-	writeln("found ",it);
+	writeln(it);
 }
