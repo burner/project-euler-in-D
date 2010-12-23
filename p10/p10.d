@@ -1,26 +1,32 @@
 import std.stdio;
-import std.container;
+import std.math;
 
 void main() {
-	Array!(ulong) prim;
-	prim.insertBack(2);
-	prim.insertBack(3);
-	ulong tt = prim.back();
+	uint prim[4096];
+	uint pptr = 0;
+	prim[pptr++] =	2;
+	prim[pptr++] =	3;
+	uint tt = prim[pptr-1];
 	ulong sum = 5;
 	bool primB = false;
-	//while(tt < 2_000_000) {
-	while(tt < 1_999_999) {
+	//outer: while(tt < 100) {
+	outer: while(tt < 2_000_000) {
 		tt+=2;
-		primB = true;
-		foreach(it; prim) {
+		//if(tt % 25000 == 1) writeln(tt);
+		foreach(it; prim[0..pptr]) {
 			if(tt % it == 0) {
-				primB = false;
-				break;
+				continue outer;
 			}
 		}
-		if(primB) {
-			prim.insertBack(tt);
-			sum+=tt;
+		for(uint i = prim[pptr-1]; i < sqrt(tt); i+=2) {
+			if(tt % i == 0) {
+				continue outer;
+			}
+		}
+		
+		sum+=tt;
+		if(pptr < 4096) {
+			prim[pptr++] = tt;
 		}
 	}
 	writeln(sum);
