@@ -19,7 +19,22 @@ then
 		cd ..
 	done
 	exit
-fi
+elif [ "$1" == "run" ];
+then
+	for direc in $Dirlist;
+	do
+		cd $direc
+		files=$(find . -executable -type f)
+		for obj in $files;
+		do
+			echo $obj
+			$obj
+			echo ""
+		done
+		cd ..
+	done
+	exit
+fi	
 
 compiler=dmd
 for direc in $Dirlist; 

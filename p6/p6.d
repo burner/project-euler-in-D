@@ -11,6 +11,6 @@ void main() {
 		susq += i ^^ 2;
 		sqnsu += i;
 		rs = (sqnsu ^^ 2) - susq;
-		writeln(susq, " ", sqnsu^^2, " ", rs);
 	}
+	writeln(rs);
 }
