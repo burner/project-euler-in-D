@@ -14,9 +14,9 @@ void main() {
 	ulong it = 2520;
 	while(true) {
 		if(test(it)) {
-			writeln("found ",it);
-			return;
+			break;
 		}
 		it+=2520;
 	}
+	writeln("found ",it);
 }

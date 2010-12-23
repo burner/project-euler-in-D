@@ -1,26 +1,39 @@
 import std.stdio;
 import std.math;
 
-bool isPrime(uint c) {
-	writeln("check ",c);
-	if(c % 2 == 0) return false;
-	for(uint i = 3; i < c/2; i+=2) {
-		if(c % i == 0) return false;	
-	} 
-	return true;
+int lengthOfRecurringCycle( int n ) {
+	scope int[] quotients = new int[1000];
+	scope int[] remainders = new int[1000];
+
+	remainders[0] = 1;
+	quotients[0] = 0;
+
+	for(int i=1; i<quotients.length; i++) {
+		quotients[i] = remainders[i-1]*10/n;
+		remainders[i] = remainders[i-1]*10 - quotients[i]*n;
+
+		for(int j=1; j<i; j++) {
+			if( quotients[j] == quotients[i] && 
+				remainders[j] == remainders[i] ) {
+				return (i-j);
+			}
+		}
+	}
+	return -1;
 }
 
 void main() {
-	int c = 1;
-	short d;
-	for(d = 999; d > 1; d-=2) {
-		if(!isPrime(d)) continue;
-		c = 1;
-		while( (pow(10, c)-1) % d != 0) {
-			c % 10000 == 0 && writeln(c);
-			c++;
+	int result = 0;		
+	int maxLength = 0;
+	int length;
+
+	for(int i=1; i<1000; i++) {
+		length = lengthOfRecurringCycle(i);
+
+		if(length > maxLength) {
+			result = i;
+			maxLength = length;
 		}
-		if( (d-c) == 1) break;
 	}
-	writeln(d);
+	writeln(result );
 }
