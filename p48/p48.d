@@ -4,10 +4,10 @@ void main() {
 	BigIntBase10 rs = new BigIntBase10(0);
 	BigIntBase10 tmp1 = new BigIntBase10(1000);
 	BigIntBase10 tmp2 = new BigIntBase10(1000);
-	for(ushort i = 1; i < 1000; i++) {
+	for(uint i = 1; i < 1000; i++) {
 		tmp1 = new BigIntBase10(i);	
 		tmp2 = new BigIntBase10(i);	
-		for(ushort j = 1; j < i; j++) {
+		for(uint j = 1; j < i; j++) {
 			tmp1 = tmp1 * tmp2;
 		}
 		rs = rs + tmp1;
@@ -19,7 +19,7 @@ void main() {
 
 class BigIntBase10 {
 	private immutable byte NumberBase = 10;
-	private immutable short MaxSize = 1280 * 5;
+	private immutable int MaxSize = 1280 * 5;
 
 
 	/// Integer constants
@@ -32,7 +32,7 @@ class BigIntBase10 {
 	}
 
 	public short[] digits;
-	public ushort size;
+	public uint size;
 
 	public bool sign;
 
@@ -43,7 +43,7 @@ class BigIntBase10 {
 		this.sign = false;
 	}
 
-	public this(short n) {
+	public this(int n) {
 		this.digits = new short[16];
 		this.sign = false;
 
@@ -66,7 +66,7 @@ class BigIntBase10 {
 	}
 
 	public this(BigIntBase10 n) {
-		this.digits = new short[cast(ushort)(n.digits.length*1.0)];
+		this.digits = new short[cast(uint)(n.digits.length*1.0)];
 		this.size = 0;
 		this.sign = n.sign;
 
@@ -81,7 +81,7 @@ class BigIntBase10 {
 		if(this.size != other.size)
 			return false;
 
-		for(ushort i = 0; i < this.size; i++)
+		for(uint i = 0; i < this.size; i++)
 			if(this.digits[i] != other.digits[i])
 				return false;
 
@@ -97,7 +97,7 @@ class BigIntBase10 {
 		if(this.sign) {
 			ret ~= '-';
 		}
-		//for(ushort i = size - 1; i >= 0; i--)
+		//for(uint i = size - 1; i >= 0; i--)
 		foreach_reverse(it; this.digits[0..this.size])
 			//ret ~= cast(char)(digits[i]+48);
 			ret ~= cast(char)(it+48);
@@ -130,7 +130,7 @@ class BigIntBase10 {
 					return true;
 				if(a.size < b.size)
 					return false;
-				for(short i = (a.size) - 1; i >= 0; i--)
+				for(int i = (a.size) - 1; i >= 0; i--)
 					if(a.digits[i] > b.digits[i])
 						return true;
 					else if(a.digits[i] < b.digits[i])
@@ -140,7 +140,7 @@ class BigIntBase10 {
 					return true;
 				if(a.size > b.size)
 					return false;
-				for(short i = (a.size) - 1; i >= 0; i--)
+				for(int i = (a.size) - 1; i >= 0; i--)
 					if(a.digits[i] < b.digits[i])
 						return true;
 					else if(a.digits[i] > b.digits[i])
@@ -271,7 +271,7 @@ class BigIntBase10 {
 	}
 
 
-	public BigIntBase10 opOpAssign(string op)(short b) {
+	public BigIntBase10 opOpAssign(string op)(int b) {
 		switch(op) {
 			case "+=":
 				this = Addition(this, new BigIntBase10(b));
@@ -337,7 +337,7 @@ class BigIntBase10 {
 		}
 	}
 
-	public BigIntBase10 opBinary(string op)(short b) {
+	public BigIntBase10 opBinary(string op)(int b) {
 		switch(op) {
 			case "+":
 				return Addition(this, new BigIntBase10(b));
@@ -351,14 +351,14 @@ class BigIntBase10 {
 		}
 	}
 
-	public short opCmp(BigIntBase10 a) {
+	public int opCmp(BigIntBase10 a) {
 		return 0;
 	}
 
 	private static BigIntBase10 Add(BigIntBase10 a, BigIntBase10 b) {
 		BigIntBase10 res = new BigIntBase10(a);
-		short trans = 0, temp;
-		ushort i;
+		int trans = 0, temp;
+		uint i;
 
 		for(i = 0; i < b.size; i++) {
 			if(res.digits.length == i) {
@@ -383,8 +383,8 @@ class BigIntBase10 {
 
 	private static BigIntBase10 Subtract(BigIntBase10 a, BigIntBase10 b) {
 		BigIntBase10 res = new BigIntBase10(a);
-		ushort i;
-		short temp, trans = 0;
+		uint i;
+		int temp, trans = 0;
 		bool reducible = true;
 
 		for(i = 0; i < b.size; i++) {
@@ -425,8 +425,8 @@ class BigIntBase10 {
 	}
 
 	private static BigIntBase10 Multiply(BigIntBase10 a, BigIntBase10 b) {
-		ushort i, j;
-		short temp, trans = 0;
+		uint i, j;
+		int temp, trans = 0;
 
 		BigIntBase10 res = new BigIntBase10();
 		res.size = a.size + b.size - 1;
@@ -468,7 +468,7 @@ class BigIntBase10 {
 		return res;
 	}
 	
-	public void prshortArray() const {
+	public void printArray() const {
 		foreach(it;this.digits) {
 			write(it, " ");
 		}
